@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Qtalk Admin - Notification</title>
+    <title>Qtalk Admin - Counselors</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
@@ -72,6 +73,22 @@
         width: 40px;}
         .actou-body {padding: 20px 10px;}
 
+        .add-button {
+            width: 55px;
+            height: 55px;
+            position: relative;
+            border-radius: 50%;
+        }
+
+        .add-button-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: white;
+        }
+
     </style>
 </head>
 
@@ -82,22 +99,22 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="menu-icon fa fa-group"></i>Counselors </a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="menu-icon fa fa-user"></i>Users </a>
-                    </li>
-                    <li>
-                        <a href="chats.html"><i class="menu-icon fa fa-comments"></i>Chat </a>
+                        <a href="index.html"><ion-icon name="desktop-outline" class="menu-icon" size="medium"></ion-icon>Dashboard </a>
                     </li>
                     <li class="active">
-                        <a href="notification.html"><i class="menu-icon fa fa-bell"></i>Notification </a>
+                        <a href="counselors.html"><ion-icon name="people-outline" class="menu-icon" size="medium"></ion-icon>Counselors </a>
                     </li>
                     <li>
-                        <a href="settings.html"><i class="menu-icon fa fa-cogs"></i>Settings </a>
+                        <a href="users.html"><ion-icon name="people-outline" class="menu-icon" size="medium"></ion-icon>Users </a>
+                    </li>
+                    <li>
+                        <a href="chats.html"><ion-icon name="chatbox-ellipses-outline" class="menu-icon" size="medium"></ion-icon>Chat </a>
+                    </li>
+                    <li>
+                        <a href="notification.html"><ion-icon name="notifications-outline" class="menu-icon" size="medium"></ion-icon>Notification </a>
+                    </li>
+                    <li>
+                        <a href="settings.html"><ion-icon name="settings-outline" class="menu-icon" size="medium"></ion-icon>Settings </a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -187,7 +204,7 @@
                     <div class="col-sm-4">
                         <div class="page-header float-left">
                             <div class="page-title">
-                                <h1 class="color-red">Notification</h1>
+                                <h1 class="color-red">Counselors</h1>
                             </div>
                         </div>
                     </div>
@@ -196,7 +213,7 @@
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
                                     <li><a href="index.html">Dashboard</a></li>
-                                    <li class="active">Notification</li>
+                                    <li class="active">Counselors</li>
                                 </ol>
                             </div>
                         </div>
@@ -209,35 +226,62 @@
             <!-- Animated -->
             <div class="animated fadeIn">
                 <!-- Widgets  -->
-                    <div class="row">
-
-                        <div class="col-lg-12 pb-4">
-                            <div class="actou card col-12">
-                                <span class="photo actou-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
-                                <div class="message actou-body">
-                                    <span class="name float-left">New Account created with username: daemon</span>
-                                    <span class="time float-right">Just now</span>
-                                </div>
-                            </div>
-                            <div class="actou card col-12">
-                                <span class="photo actou-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
-                                <div class="message actou-body">
-                                    <span class="name float-left">New Account created with username: daemon</span>
-                                    <span class="time float-right">5 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="actou card col-12">
-                                <span class="photo actou-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
-                                <div class="message actou-body">
-                                    <span class="name float-left">New Account created with username: daemon</span>
-                                    <span class="time float-right">10 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="actou card col-12">
-                                <span class="photo actou-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
-                                <div class="message actou-body">
-                                    <span class="name float-left">New Account created with username: daemon</span>
-                                    <span class="time float-right">15 minutes ago</span>
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Gender</th>
+                                                <th>Profile</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td class="flat-color-5">Not Blocked</td>
+                                                <td>
+                                                    <button id="payment-button" class="btn bg-transparent color-black" data-toggle="modal" data-target="#viewCounselorModal">View Profile</button>
+                                                </td>
+                                                <td>
+                                                    <button id="payment-button" class="btn bg-transparent color-red">
+                                                        <ion-icon name="trash-outline"></ion-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Garrett Winters</td>
+                                                <td>Accountant</td>
+                                                <td class="color-red">Blocked</td>
+                                                <td>
+                                                    <button id="payment-button" class="btn bg-transparent color-black" data-toggle="modal" data-target="#viewCounselorModal">View Profile</button>
+                                                </td>
+                                                <td>
+                                                    <button id="payment-button" class="btn bg-transparent color-red">
+                                                        <ion-icon name="trash-outline"></ion-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ashton Cox</td>
+                                                <td>Junior Technical Author</td>
+                                                <td class="color-warning">Warned</td>
+                                                <td>
+                                                    <button id="payment-button" class="btn bg-transparent color-black" data-toggle="modal" data-target="#viewCounselorModal">View Profile</button>
+                                                </td>
+                                                <td>
+                                                    <button id="payment-button" class="btn bg-transparent color-red">
+                                                        <ion-icon name="trash-outline"></ion-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -246,6 +290,9 @@
         </div>
         <!-- /.content -->
         <div class="clearfix"></div>
+        <button class="add-button btn bg-red btn-rounded pull-right" data-toggle="modal" data-target="#addCounselorModal">
+            <ion-icon name="add-outline" class="add-button-icon"></ion-icon>
+        </button>
         <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-inner bg-white">
@@ -265,12 +312,12 @@
         <!-- /.site-footer -->
     </div>
     <!-- /#right-panel -->
-    <div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog" aria-labelledby="createGroupModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addCounselorModal" tabindex="-1" role="dialog" aria-labelledby="addCounselorModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row pr-3">
-                        <h3 class="modal-title col" id="createGroupModalLabel">Create Group Chat</h3>
+                        <h3 class="modal-title col" id="addCounselorModalLabel">Add Counselors</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -280,25 +327,84 @@
                     <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="row justify-content-center">
                             <div class="col-12 form-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12 form-group">
-                                <input type="text" id="group-username" name="group-username" placeholder="Enter Your Username" class="form-control col-12">
-                            </div>
-                            <div class="col-md-6 col-12 form-group">
-                                <input type="text" id="group-creator" name="group-creator" placeholder="Created By" class="form-control col-12">
+                                <input type="text" id="group-username" name="group-username" placeholder="Fullname" class="form-control col-12">
                             </div>
                             <div class="col-12 form-group">
-                                <input type="number" id="group-number" name="group-number" placeholder="0" class="form-control">
+                                <input type="text" id="group-username" name="group-username" placeholder="Username" class="form-control col-12">
                             </div>
                             <div class="col-12 form-group">
-                                <textarea name="group-description" id="group-description" rows="9" placeholder="Description" class="form-control"></textarea>
+                                <input type="email" id="group-creator" name="group-creator" placeholder="Email" class="form-control col-12">
                             </div>
                             <div class="col-12 form-group">
-                                <button id="payment-button" type="submit" class="btn btn-lg bg-red color-white btn-block">Create</button>
+                                <input type="text" id="group-username" name="group-username" placeholder="Designation" class="form-control col-12">
+                            </div>
+                            <div class="col-12 form-group">
+                                <input type="number" id="group-number" name="group-number" placeholder="Phone number" class="form-control col-12">
+                            </div>
+                            <div class="col-12 form-group">
+                                <select name="select" id="select" class="form-control col-12">
+                                    <option value="0">Gender</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                </select>
+                            </div>
+                            <div class="col-12 form-group">
+                                <input type="password" id="group-number" name="group-number" placeholder="password" class="form-control">
+                            </div>
+                            <div class="col-12 form-group">
+                                <textarea name="group-description" id="group-description" rows="9" placeholder="Bio" class="form-control"></textarea>
+                            </div>
+                            <div class="col-12 form-group">
+                                <button id="payment-button" type="submit" class="btn btn-lg bg-red color-white btn-block">Add Counselor</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="viewCounselorModal" tabindex="-1" role="dialog" aria-labelledby="viewCounselorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row pr-3">
+                        <h3 class="modal-title col" id="viewCounselorModalLabel">Counselor Profile</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="row justify-content-center">
+                            <div class="col-12 form-group">
+                                <p class="form-control-static">Fullname</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <p class="form-control-static">Username</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <p class="form-control-static">Username@mail.com</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <p class="form-control-static">Designation</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <p class="form-control-static">134859464894356</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <p class="form-control-static">gender</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <p class="form-control-static">Password</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <p class="form-control-static">Bio - Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, quasi quibusdam. Impedit qui ex sequi, sunt illo ducimus temporibus adipisci, quos, ad voluptates accusamus esse quidem ullam provident aliquid velit!</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <button id="payment-button" type="submit" class="btn btn-lg bg-red color-white btn-block">Block Counselor</button>
                             </div>
                         </div>
                     </form>
@@ -312,27 +418,27 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <!--  Chart js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
 
-    <!--Chartist Chart-->
-    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flot-pie@1.0.0/src/jquery.flot.pie.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
-    <script src="assets/js/init/weather-init.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
-    <script src="assets/js/init/fullcalendar-init.js"></script>
+    <script src="assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="assets/js/init/datatables-init.js"></script>
 
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('#bootstrap-data-table-export').DataTable();
+      } );
+  </script>
     
 </body>
 </html>
