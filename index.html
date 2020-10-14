@@ -94,6 +94,7 @@
 </head>
 
 <body>
+    <div id="loader" class="center"></div> 
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel pt-4">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -216,11 +217,9 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" id="userName"><i class="fa fa-user"></i></a>
+                            <a class="nav-link" id="logout"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
 
@@ -252,7 +251,7 @@
                         </div>
                     </div> -->
 
-                    <div class="col-md-6 col-12">
+                    <div class="col-md-6 col-12" id="allUsers">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -261,7 +260,7 @@
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><span class="count">23569</span></div>
+                                            <div class="stat-text"><span class="count"></span></div>
                                             <div class="stat-heading">Total Users</div>
                                         </div>
                                     </div>
@@ -270,7 +269,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-12">
+                    <div class="col-md-6 col-12" id="allCounselors">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -279,7 +278,7 @@
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><span class="count">2986</span></div>
+                                            <div class="stat-text"><span class="count"></span></div>
                                             <div class="stat-heading">Total Counselors</div>
                                         </div>
                                     </div>
@@ -289,6 +288,39 @@
                     </div>
                 </div>
                 <!-- /Widgets -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="box-title">Traffic </h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card-body">
+                                        <!-- <canvas id="TrafficChart"></canvas>   -->
+                                        <!-- <div id="traffic-chart" class="traffic-chart"></div> -->
+                                        <canvas id="traffic"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /# column -->
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="box-title">Consultation</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card-body">
+                                        <!-- <canvas id="TrafficChart"></canvas>   -->
+                                        <canvas id="consultation"></canvas>
+                                    </div>
+                                </div>
+                            </div> <!-- /.row -->
+                        </div>
+                    </div><!-- /# column -->
+                </div>
                 <!--  Traffic  -->
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
@@ -396,41 +428,18 @@
                                 <div class="card-body">
                                     <h4 class="box-title">Reports </h4>
                                 </div>
-                                <div class="card-body--">
+                                <div class="card-body">
                                     <div class="table-stats order-table ov-h">
                                         <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Description</th>
-                                                    <th></th>
+                                                    <th>Category</th>
+                                                    <th>Complain</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>  <span class="name">Louis Stanley</span> </td>
-                                                    <td> <span>Abusive or Harmful</span> </td>
-                                                    <td><span>Bugging me</span></td>
-                                                    <!-- <td>
-                                                        <span class="badge badge-complete">Complete</span>
-                                                    </td> -->
-                                                </tr>
-                                                <tr>
-                                                    <td>  <span class="name">Louis Stanley</span> </td>
-                                                    <td> <span>Abusive or Harmful</span> </td>
-                                                    <td><span>Bugging me</span></td>
-                                                    <!-- <td>
-                                                        <span class="badge badge-complete">Complete</span>
-                                                    </td> -->
-                                                </tr>
-                                                <tr>
-                                                    <td>  <span class="name">Louis Stanley</span> </td>
-                                                    <td> <span>Abusive or Harmful</span> </td>
-                                                    <td><span>Bugging me</span></td>
-                                                    <!-- <td>
-                                                        <span class="badge badge-complete">Complete</span>
-                                                    </td> -->
-                                                </tr>
+                                            <tbody id="reports">
+                                                
                                             </tbody>
                                         </table>
                                     </div> <!-- /.table-stats -->
@@ -530,8 +539,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Description</th>
-                                                <th></th>
+                                                <th>Position</th>
+                                                <th>Problem</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -954,12 +963,13 @@
                                 </ul> -->
                                 <select data-placeholder="Select single or multiple users" multiple class="standardSelect" tabindex="5">
                                     <option value="" label="default"></option>
-                                    <option>user 1</option>
-                                    <option>user 2</option>
-                                    <option>user 3</option>
-                                    <option>user 4</option>
-                                </optgroup>
-                            </select>
+                                    <optgroup label="All Users">
+                                        <option>user 1</option>
+                                        <option>user 2</option>
+                                        <option>user 3</option>
+                                        <option>user 4</option>
+                                    </optgroup>
+                                </select>
                                 <div class="send-mgs">
                                     <div class="yourmsg">
                                         <input class="form-control" type="text">
@@ -1001,16 +1011,16 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="assets/js/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/loader.js"></script>
     <script src="assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
 
-    <!--Local Stuff-->
     <script>
-        jQuery(document).ready(function() {
-            jQuery(".standardSelect").chosen({
-                disable_search_threshold: 10,
+        jQuery(document).ready(function($){
+            $(".standardSelect").chosen({
                 no_results_text: "Oops, nothing found!",
                 width: "100%"
             });
@@ -1280,6 +1290,7 @@
             // Bar Chart #flotBarChart End
         });
     </script>
+    <!--Local Stuff-->
 
 </body>
 </html>

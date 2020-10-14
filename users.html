@@ -89,10 +89,19 @@
             color: white;
         }
 
+        td.details-control {
+            background: url('images/down-arrow.png') no-repeat center center;
+            cursor: pointer;
+        }
+        tr.shown td.details-control {
+            background: url('images/up-arrow.png') no-repeat center center;
+        }
+
     </style>
 </head>
 
 <body>
+    <div id="loader" class="center"></div> 
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel pt-4">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -226,73 +235,44 @@
             <!-- Animated -->
             <div class="animated fadeIn">
                 <!-- Widgets  -->
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Gender</th>
-                                                <th>Profile</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td class="flat-color-5">Not Blocked</td>
-                                                <td>
-                                                    <button id="payment-button" class="btn bg-transparent color-black" data-toggle="modal" data-target="#viewUserModal">View Profile</button>
-                                                </td>
-                                                <td>
-                                                    <button id="payment-button" class="btn bg-transparent color-red">
-                                                        <ion-icon name="trash-outline"></ion-icon>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td class="color-red">Blocked</td>
-                                                <td>
-                                                    <button id="payment-button" class="btn bg-transparent color-black" data-toggle="modal" data-target="#viewUserModal">View Profile</button>
-                                                </td>
-                                                <td>
-                                                    <button id="payment-button" class="btn bg-transparent color-red">
-                                                        <ion-icon name="trash-outline"></ion-icon>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ashton Cox</td>
-                                                <td>Junior Technical Author</td>
-                                                <td class="color-warning">Warned</td>
-                                                <td>
-                                                    <button id="payment-button" class="btn bg-transparent color-black" data-toggle="modal" data-target="#viewUserModal">View Profile</button>
-                                                </td>
-                                                <td>
-                                                    <button id="payment-button" class="btn bg-transparent color-red">
-                                                        <ion-icon name="trash-outline"></ion-icon>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-body table-responsive">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>Status</th>
+                                            <th>Phone</th>
+                                            <th>email</th>
+                                            <th>Block</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>Status</th>
+                                            <th>Phone</th>
+                                            <th>email</th>
+                                            <th>Block</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
+                </div>
             <!-- .animated -->
         </div>
         <!-- /.content -->
         <div class="clearfix"></div>
-        <button class="add-button btn bg-red btn-rounded pull-right" data-toggle="modal" data-target="#addUserModal">
-            <ion-icon name="add-outline" class="add-button-icon"></ion-icon>
-        </button>
         <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-inner bg-white">
@@ -310,58 +290,6 @@
             </div>
         </footer>
         <!-- /.site-footer -->
-    </div>
-    <!-- /#right-panel -->
-    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="row pr-3">
-                        <h3 class="modal-title col" id="addUserModalLabel">Add User</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="row justify-content-center">
-                            <div class="col-12 form-group">
-                                <input type="text" id="group-username" name="group-username" placeholder="Fullname" class="form-control col-12">
-                            </div>
-                            <div class="col-12 form-group">
-                                <input type="text" id="group-username" name="group-username" placeholder="Username" class="form-control col-12">
-                            </div>
-                            <div class="col-12 form-group">
-                                <input type="email" id="group-creator" name="group-creator" placeholder="Email" class="form-control col-12">
-                            </div>
-                            <div class="col-12 form-group">
-                                <input type="text" id="group-username" name="group-username" placeholder="Designation" class="form-control col-12">
-                            </div>
-                            <div class="col-12 form-group">
-                                <input type="number" id="group-number" name="group-number" placeholder="Phone number" class="form-control col-12">
-                            </div>
-                            <div class="col-12 form-group">
-                                <select name="select" id="select" class="form-control col-12">
-                                    <option value="0">Gender</option>
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
-                                </select>
-                            </div>
-                            <div class="col-12 form-group">
-                                <input type="password" id="group-number" name="group-number" placeholder="password" class="form-control">
-                            </div>
-                            <div class="col-12 form-group">
-                                <textarea name="group-description" id="group-description" rows="9" placeholder="Bio" class="form-control"></textarea>
-                            </div>
-                            <div class="col-12 form-group">
-                                <button id="payment-button" type="submit" class="btn btn-lg bg-red color-white btn-block">Add User</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 
 
@@ -420,6 +348,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/loader.js"></script>
 
 
     <script src="assets/js/lib/data-table/datatables.min.js"></script>
@@ -435,10 +364,115 @@
 
 
     <script type="text/javascript">
+        /* Formatting function for row details - modify as you need */
+        function format ( d ) {
+            // `d` is the original data object for the row
+            return '<table class="table-responsive" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                    '<td>Profile Image:</td>'+
+                    '<td>'+d.imageUrl+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>Designation:</td>'+
+                    '<td>'+d.designation+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>Bio:</td>'+
+                    '<td>'+d.bio+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>No of Times Reported:</td>'+
+                    '<td>'+ +'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>No of Times Blocked:</td>'+
+                    '<td>'+ +'</td>'+
+                '</tr>'+
+            '</table>';
+            
+        }
+        
         $(document).ready(function() {
-          $('#bootstrap-data-table-export').DataTable();
-      } );
-  </script>
+            var table = $('#bootstrap-data-table').DataTable( {
+                "ajax": {
+                    "url": "https://us-central1-nfcs-7ab10.cloudfunctions.net/getUsers",
+                    "data": "",
+                    "dataSrc": function (response) {
+                        var tableData = response.data;
+                        console.log(tableData);
+                        var return_data = new Array();
+                        var tokensArr = new Array();
+                        for(const person of tableData){
+
+                            const tokens = {}
+                            tokens[person.uid] = person.token
+
+                            
+                            tokensArr.push(tokens)
+
+                            return_data.push({
+                            'name': `<span>  ${person.username} </span> <i class="fa fa-circle ${(person.online == 'true') ?  'color-green'  : 'color-red'}" style="font-size:5px"></i>  `,
+                            'gender': person.gender,
+                            'status': (person.blocked == "true") ? "blocked" : "unblocked",
+                            'email': person.email,
+                            'imageUrl'  : '<img src="' + person.imageUrl + '" width="50">',
+                            'designation': person.designation,
+                            'phone' : person.phone,
+                            'designation' : person.designation,
+                            'bio' : person.bio,
+                            'id'  : person.uid,
+                            'blocked':  `<button id="${(person.uid)}" class="btn bg-transparent block"><i class="fa ${(person.blocked == 'true') ?  'fa-times color-red'  : 'fa-check color-green'}"></i></button>`
+                            })
+                        }
+                        return return_data;
+                    }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ],
+                "columns": [
+                        {
+                        "className":      'details-control',
+                        "orderable":      false,
+                        "targets":        -1,
+                        "data":           null,
+                        "defaultContent": ''
+                    },
+                    {"data" : "name"},
+                    {"data" : "gender"},
+                    {"data" : "status"},
+                    {"data" : "phone"},
+                    {"data" : "email"},
+                    {"data": "blocked"},
+                    {"defaultContent": '<button class="btn bg-transparent color-red"><ion-icon name="trash-outline"></ion-icon></button>'}
+                ],  
+                "order": [[0, 'asc']],
+                "bDestroy": true
+            });
+            $('#bootstrap-data-table tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row( tr );
+        
+                if ( row.child.isShown() ) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            } );
+            $('#bootstrap-data-table tbody').on( 'click', 'button', function () {
+                $(this).closest("tr").remove();
+            } );
+        });
+    </script>
     
 </body>
 </html>

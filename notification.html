@@ -76,6 +76,7 @@
 </head>
 
 <body>
+    <div id="loader" class="center"></div> 
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel pt-4">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -210,34 +211,27 @@
             <div class="animated fadeIn">
                 <!-- Widgets  -->
                     <div class="row">
-
-                        <div class="col-lg-12 pb-4">
-                            <div class="actou card col-12">
-                                <span class="photo actou-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
-                                <div class="message actou-body">
-                                    <span class="name float-left">New Account created with username: daemon</span>
-                                    <span class="time float-right">Just now</span>
-                                </div>
-                            </div>
-                            <div class="actou card col-12">
-                                <span class="photo actou-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
-                                <div class="message actou-body">
-                                    <span class="name float-left">New Account created with username: daemon</span>
-                                    <span class="time float-right">5 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="actou card col-12">
-                                <span class="photo actou-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
-                                <div class="message actou-body">
-                                    <span class="name float-left">New Account created with username: daemon</span>
-                                    <span class="time float-right">10 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="actou card col-12">
-                                <span class="photo actou-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
-                                <div class="message actou-body">
-                                    <span class="name float-left">New Account created with username: daemon</span>
-                                    <span class="time float-right">15 minutes ago</span>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body table-responsive">
+                                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Message</th>
+                                                <th>Type</th>
+                                                <th>Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Message</th>
+                                                <th>Type</th>
+                                                <th>Time</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -314,6 +308,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/axios.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/loader.js"></script>
 
     <!--  Chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
@@ -334,6 +331,54 @@
     <script src="assets/js/init/fullcalendar-init.js"></script>
 
 
+    <script src="assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="assets/js/init/datatables-init.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var table = $('#bootstrap-data-table').DataTable( {
+                "ajax": {
+                    "url": "https://us-central1-nfcs-7ab10.cloudfunctions.net/getNotifications",
+                    "dataSrc": function (response) {
+                        var tableData = response.data;
+                        console.log(tableData);
+                        var return_data = new Array();
+                        for(var i=0;i< tableData.length; i++){
+                            return_data.push({
+                            'title'  : tableData[i].title,
+                            'message': tableData[i].message,
+                            'type': tableData[i].type,
+                            'time': tableData[i].time ? tableData[i].time : tableData[i].formatted
+                            })
+                        }
+                        return return_data;
+                    }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ],
+                "columns": [
+                    {"data" : "title"},
+                    {"data" : "message"},
+                    {"data" : "type"},
+                    {"data" : "time"}
+                ],  
+                "bDestroy": true
+            });
+        })
+    </script>
     
 </body>
 </html>

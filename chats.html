@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
@@ -64,10 +65,27 @@
             height: 160px;
         }
 
+        .add-button {
+            width: 55px;
+            height: 55px;
+            position: relative;
+            border-radius: 50%;
+        }
+
+        .add-button-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: white;
+        }
+
     </style>
 </head>
 
 <body>
+    <div id="loader" class="center"></div> 
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel pt-4">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -204,48 +222,28 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-body">
-                                <table class="table table-striped">
+                            <div class="card-body table-responsive">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
+                                            <th scope="col" class="color-red">Group Image</th>
                                             <th scope="col" class="color-red">Name</th>
                                             <th scope="col" class="color-red">Description</th>
                                             <th scope="col" class="color-red">Created By</th>
                                             <th scope="col" class="color-red">Members</th>
-                                            <th scope="col" class="color-red">
-                                                <button type="button" class="btn bg-red btn-danger br-0" data-toggle="modal" data-target="#createGroupModal">Create</button>
-                                            </th>
+                                            <th scope="col" class="color-red">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tfoot>
                                         <tr>
-                                            <td><a href="chat.html">friend-zone</a></td>
-                                            <td>this is the friend-zone chat</td>
-                                            <td>Admin</td>
-                                            <td>233</td>
-                                            <td>
-                                                <button type="button" class="btn bg-red btn-danger br-0">Delete</button>
-                                            </td>
+                                            <th scope="col" class="color-red">Group Image</th>
+                                            <th scope="col" class="color-red">Name</th>
+                                            <th scope="col" class="color-red">Description</th>
+                                            <th scope="col" class="color-red">Created By</th>
+                                            <th scope="col" class="color-red">Members</th>
+                                            <th scope="col" class="color-red">Action</th>
                                         </tr>
-                                        <tr>
-                                            <td><a href="chat.html">General</a></td>
-                                            <td>this is the live general chat</td>
-                                            <td>Admin</td>
-                                            <td>124</td>
-                                            <td>
-                                                <button type="button" class="btn bg-red btn-danger br-0">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="chat.html">Health</a></td>
-                                            <td>this is the live health chat</td>
-                                            <td>Admin</td>
-                                            <td>267</td>
-                                            <td>
-                                                <button type="button" class="btn bg-red btn-danger br-0">Delete</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -255,6 +253,9 @@
         </div>
         <!-- /.content -->
         <div class="clearfix"></div>
+        <button class="add-button btn bg-red btn-rounded pull-right" data-toggle="modal" data-target="#createGroupModal">
+            <ion-icon name="add-outline" class="add-button-icon"></ion-icon>
+        </button>
         <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-inner bg-white">
@@ -286,28 +287,28 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <form id="createGroupForm" class="form-horizontal">
                         <div class="row justify-content-center">
                             <div class="col-12 form-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <input type="file" class="custom-file-input" id="gImage">
+                                    <label class="custom-file-label" for="gImage">Choose file</label>
                                 </div>
                             </div>
                             <div class="col-md-6 col-12 form-group">
-                                <input type="text" id="group-username" name="group-username" placeholder="Enter Your Username" class="form-control col-12">
+                                <input type="text" id="gName" name="group-username" placeholder="Enter Group Name" class="form-control col-12">
                             </div>
                             <div class="col-md-6 col-12 form-group">
-                                <input type="text" id="group-creator" name="group-creator" placeholder="Created By" class="form-control col-12">
+                                <input type="text" id="gCreator" name="group-creator" placeholder="Created By" class="form-control col-12">
                             </div>
                             <div class="col-12 form-group">
-                                <input type="number" id="group-number" name="group-number" placeholder="0" class="form-control">
+                                <input type="number" id="gNumber" name="group-number" placeholder="0" class="form-control">
                             </div>
                             <div class="col-12 form-group">
-                                <textarea name="group-description" id="group-description" rows="9" placeholder="Description" class="form-control"></textarea>
+                                <textarea id="gDesc" name="group-description" rows="9" placeholder="Description" class="form-control"></textarea>
                             </div>
                             <div class="col-12 form-group">
-                                <button id="payment-button" type="submit" class="btn btn-lg bg-red color-white btn-block">Create</button>
+                                <button type="submit" class="btn btn-lg bg-red color-white btn-block">Create</button>
                             </div>
                         </div>
                     </form>
@@ -341,6 +342,93 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
+    <script src="assets/js/axios.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/loader.js"></script>
+
+
+    <script src="assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="assets/js/init/datatables-init.js"></script>
+
+
+    <script type="text/javascript">
+        
+        $(document).ready(function() {
+            var table = $('#bootstrap-data-table').DataTable( {
+                "ajax": {
+                    "url": "https://us-central1-nfcs-7ab10.cloudfunctions.net/getGroupChat",
+                    "data": "",
+                    "dataSrc": function (response) {
+                        var tableData = response.data;
+                        console.log(tableData);
+                        var return_data = new Array();
+                        for(var i=0;i< tableData.length; i++){
+                            return_data.push({
+                            'imageUrl'  : '<img src="' + tableData[i].imageUrl + '" width="50">',
+                            'name': '<a href="chat.html?' + tableData[i].name + '" class="group-name">'+ tableData[i].name +'</a>',
+                            'description': tableData[i].desc,
+                            'createdBy': tableData[i].createdBy,
+                            'members': tableData[i].members
+                            })
+                        }
+                        return return_data;
+                    }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ],
+                "columns": [
+                    {"data" : "imageUrl"},
+                    {"data" : "name"},
+                    {"data" : "description"},
+                    {"data" : "createdBy"},
+                    {"data" : "members"},
+                    {"defaultContent": '<button class="btn bg-transparent color-red delGroup"><ion-icon name="trash-outline"></ion-icon></button>'}
+                ],  
+                "bDestroy": true
+            });
+            
+            $('#bootstrap-data-table tbody').on( 'click', 'button', function () {
+                var tr = $(this).closest("tr");
+                var name = tr.find("td>a").text();
+                
+                var obj = {};
+                obj.name = name;
+
+                $.ajax({
+                    url: 'https://us-central1-qtalk-4dd0f.cloudfunctions.net/deleteGroup',
+                    headers: { 'Access-Control-Allow-Origin': 'http://127.0.0.1:8080' },
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "groupName": obj.name
+                    }
+                }).done(function(data) {
+                    console.log(data);
+                    tr.remove();
+                    window.location.replace("/chats.html")
+                }).fail(function(err) {
+                    console.log(err);
+                })
+            } );
+        });
+
+       
+
+        
+    </script>
 
 
     
