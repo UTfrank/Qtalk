@@ -92,11 +92,13 @@ if (userName) {
 
 // All Users
 const allUsers = _("#allUsers");
+const allUsersMsg = ("#singleUser");
 
 if (allUsers) {
     const allUsersUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/getUsers";
     axios.get(allUsersUrl).then(function(response){
         console.log(response.data.data);
+        const users = response.data.data
         allUsers.innerHTML = `
         <div class="card">
             <div class="card-body">
@@ -114,6 +116,16 @@ if (allUsers) {
             </div>
         </div>
         `
+
+        for(const person of users){
+            allUsersMsg.innerHTML = `
+            <option value="" label="default"></option>
+            <optgroup label="All Users">
+                <option id="${person.uid}">${person.username}</option>
+            </optgroup>
+            `
+        }
+
     }).catch(function(err) {
         console.log(err.response);
     })
@@ -199,7 +211,7 @@ if (allCounselors) {
                     <div class="stat-content">
                         <div class="text-left dib">
                             <div class="stat-text"><span class="count">${response.data.number}</span></div>
-                            <div class="stat-heading">Total Users</div>
+                            <div class="stat-heading">Total Counsellors</div>
                         </div>
                     </div>
                 </div>
