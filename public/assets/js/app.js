@@ -1,3 +1,15 @@
+// // Preloader
+// function preloader() {
+//     console.log('hello');
+//     if ($('#preloader').length) {
+//       $('#preloader').delay(100).fadeOut('slow', function() {
+//         $(this).remove();
+//       });
+//     }
+// }
+  
+// $(window).on('load', preloader());
+
 function _(str) {
     return document.querySelector(str);
 }
@@ -8,11 +20,12 @@ function _(str) {
 const checkToken = !! localStorage.getItem("usertoken");
 
 // the path we dont want just anyone to see
-if(location.pathname == "/index.html") {
+if(location.pathname == "index.html") {
+    console.log('index page')
 
     // if there's no token, redirect the user to loging
     if(!checkToken) {
-    location.replace('/login.html');
+        location.replace('/login.html');
     }
 
 }
@@ -42,21 +55,24 @@ if(loginForm) {
 
             const token = response.data.data.uid;
             localStorage.setItem('usertoken', token);
-            console.log(token);
+            console.log(localStorage.getItem("usertoken"));
 
             const name = response.data.data.username;
             localStorage.setItem('uname', name);
             console.log(name);
 
-            swal.fire({
-                position: 'top-end',
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: `Login Successful`,
                 showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                title: 'Signin Successful'
+                timer: 3000
             })
 
-            location.replace("/index.html")
+            setTimeout(() => {
+            
+                location.replace("index.html")
+            }, 3000);
     
         }).catch(function(err) {
             console.log(err.response)

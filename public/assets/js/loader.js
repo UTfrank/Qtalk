@@ -1,10 +1,11 @@
-// Initiate an Ajax request on button click
-document.onreadystatechange = function() { 
-    if (document.readyState !== "complete") { 
-        document.querySelector("body").style.visibility = "hidden"; 
-        document.querySelector("#loader").style.visibility = "visible"; 
-    } else { 
-        document.querySelector("#loader").style.display = "none"; 
-        document.querySelector("body").style.visibility = "visible"; 
-    } 
-}; 
+// Preloader
+function preloader() {
+    if ($('#preloader').length) {
+      $('#preloader').delay(100).fadeOut('slow', function() {
+        $(this).remove();
+      });
+    }
+}
+  
+// $(window).on('load', preloader());
+$( window ).load(preloader());
