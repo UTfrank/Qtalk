@@ -263,7 +263,7 @@
 
                             <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" id="logout"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
 
@@ -328,7 +328,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/axios.js"></script>
-    <script src="assets/js/app.js"></script>
+    <!-- <script src="assets/js/app.js"></script> -->
+    <script src="assets/js/chat.js"></script>
     <script src="assets/js/loader.js"></script>
 
     <!--  Chart js -->
@@ -349,176 +350,6 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
 
-    <script>
-        var queryString = location.search.substring(1);
-        console.log(queryString);
-
-        const groupMembers = _("#left-panel");
-
-        if(groupMembers) {
-
-                        
-            // console.log('page is fully loaded');
-            // });
-            window.addEventListener('load', () => {
-                // e.preventDefault();
-
-                const groupName = queryString;
-                
-            
-                const userData = {
-                    name: groupName
-                }
-            
-                console.log(userData);
-            
-                const groupMembersUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/getGroupMembers";
-            
-                axios.post(groupMembersUrl, userData).then(function(response) {
-                    
-                    // console.log(response.data)
-
-                    const allMembers = response.data.data;
-                    if (allMembers.length > 0) {
-                        let content = '';
-                        for (var i in allMembers) {
-                            content += `
-                            <div class="col-md-12 p-0">
-                                <div class="profile-nav alt col-12 p-1">
-                                    <section class="card side-card">
-                                        <div class="list-group list-group-flush">
-                                            <div class="list-group-item">
-                                                ${allMembers[i].name}
-                                                <button class="btn float-right uid" id="${allMembers[i].uid}">
-                                                    <i class="fa fa-lock"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>`;
-                        }
-                        groupMembers.insertAdjacentHTML('beforeend', content);
-                    }
-            
-                }).catch(function(err) {
-                    console.log(err.response)
-                })
-            
-
-            })
-
-        }
-
-        const groupMessage = _("#messageBox");
-
-        if(groupMessage) {
-
-                        
-            // console.log('page is fully loaded');
-            // });
-            window.addEventListener('load', () => {
-                // e.preventDefault();
-
-                const groupName = queryString;
-                
-            
-                const userData = {
-                    name: groupName
-                }
-            
-                console.log(userData);
-            
-                const groupMessageUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/getGroupMessage";
-            
-                axios.post(groupMessageUrl, userData).then(function(response) {
-                    
-                    // console.log(response.data)
-
-                    const allMessages = response.data.data;
-                    if (allMessages.length > 0) {
-                        let content = '';
-                        for (var i in allMessages) {
-                            content += `
-                            <ul>
-                                <li>
-                                    <div class="msg-received msg-container">
-                                        <!-- <div class="avatar">
-                                            <img src="images/avatar/64-1.jpg" alt="">
-                                        </div> -->
-                                        <div class="msg-box">
-                                            <div class="inner-box">
-                                                <div class="name">
-                                                    ${allMessages[i].senderName}
-                                                </div>
-                                                <div class="meg">
-                                                    ${allMessages[i].message}
-                                                </div>
-                                            </div>
-                                            <div class="send-time">${new Date(allMessages[i].date).toLocaleDateString('en-US')}, ${new Date(allMessages[i].date).toLocaleTimeString('en-US')}</div> 
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- <li>
-                                    <div class="msg-sent msg-container">
-                                        <div class="avatar">
-                                            <img src="images/avatar/64-2.jpg" alt="">
-                                        </div>
-                                        <div class="msg-box">
-                                            <div class="inner-box">
-                                                <div class="name">
-                                                    John Doe
-                                                </div>
-                                                <div class="meg">
-                                                    Hay how are you doing?
-                                                </div>
-                                            </div>
-                                            <div class="send-time">11.11 am</div>
-                                        </div>
-                                    </div>
-                                </li> -->
-                            </ul>`;
-                        }
-                        groupMessage.innerHTML = content;
-                    }
-            
-                }).catch(function(err) {
-                    console.log(err)
-                })
-            
-
-            })
-
-        }
-
-        jQuery(document).ready(function($){
-            $('body').on('click', 'button.uid', function () {
-                var thisID = $(this).attr('id');
-                console.log(thisID);
-                let groupName = queryString;
-                let uid = thisID;
-                var obj = {};
-                obj.name = groupName;
-                obj.id = uid
-
-                $.ajax({
-                    url: 'https://us-central1-nfcs-7ab10.cloudfunctions.net/blockUserFromGroup',
-                    headers: { 'Access-Control-Allow-Origin': 'http://127.0.0.1:8080' },
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "groupName": obj.name,
-                        "uid": obj.id
-                    }
-                }).done(function(data) {
-                    console.log(data);
-                    $(this).addClass("color-red");
-                }).fail(function(err) {
-                    console.log(err);
-                })
-            });
-        })
-    </script>
 
 </body>
 </html>

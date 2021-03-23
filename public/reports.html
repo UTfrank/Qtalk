@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Qtalk Admin - Counselors</title>
+    <title>Qtalk Admin - Users</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"> -->
     <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
@@ -77,9 +76,7 @@
         .add-button {
             width: 55px;
             height: 55px;
-            position: fixed;
-            top: 80%;
-            right: 1%;
+            position: relative;
             border-radius: 50%;
         }
 
@@ -113,10 +110,10 @@
                     <li>
                         <a href="index.html"><ion-icon name="desktop-outline" class="menu-icon" size="medium"></ion-icon>Dashboard </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="counselors.html"><ion-icon name="people-outline" class="menu-icon" size="medium"></ion-icon>Counselors </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="users.html"><ion-icon name="people-outline" class="menu-icon" size="medium"></ion-icon>Users </a>
                     </li>
                     <li>
@@ -216,7 +213,7 @@
                     <div class="col-sm-4">
                         <div class="page-header float-left">
                             <div class="page-title">
-                                <h1 class="color-red">Counselors</h1>
+                                <h1 class="color-red">Reports</h1>
                             </div>
                         </div>
                     </div>
@@ -225,7 +222,7 @@
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
                                     <li><a href="index.html">Dashboard</a></li>
-                                    <li class="active">Counselors</li>
+                                    <li class="active">Reports</li>
                                 </ol>
                             </div>
                         </div>
@@ -238,50 +235,43 @@
             <!-- Animated -->
             <div class="animated fadeIn">
                 <!-- Widgets  -->
-                    <div class="row justify-content-center">
-                        <div class="col-md-12 col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <button class="btn bg-red text-light" data-toggle="modal" data-target="#exportTableModal">Export Table</button>
-                                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Status</th>
-                                                    <th>Phone</th>
-                                                    <th>email</th>
-                                                    <th>Block</th>
-                                                    <th>Delete</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Status</th>
-                                                    <th>Phone</th>
-                                                    <th>email</th>
-                                                    <th>Block</th>
-                                                    <th>Delete</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Name</th>
+                                                <th>Category</th>
+                                                <th>Complain</th>
+                                                <th>Date</th>
+                                                <th>Block</th>
+                                                <th>Unblock</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th>Name</th>
+                                                <th>Category</th>
+                                                <th>Complain</th>
+                                                <th>Date</th>
+                                                <th>Unblock</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             <!-- .animated -->
         </div>
         <!-- /.content -->
         <div class="clearfix"></div>
-        <button class="add-button btn bg-red btn-rounded pull-right" data-toggle="modal" data-target="#addCounselorModal">
-            <ion-icon name="add-outline" class="add-button-icon"></ion-icon>
-        </button>
         <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-inner bg-white">
@@ -300,48 +290,48 @@
         </footer>
         <!-- /.site-footer -->
     </div>
-    <!-- /#right-panel -->
-    <div class="modal fade" id="addCounselorModal" tabindex="-1" role="dialog" aria-labelledby="addCounselorModalLabel" aria-hidden="true">
+
+
+    <div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="viewUserModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row pr-3">
-                        <h3 class="modal-title col" id="addCounselorModalLabel">Add Counselors</h3>
+                        <h3 class="modal-title col" id="viewUserModalLabel">User Profile</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form id="addCouForm" class="form-horizontal">
+                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="row justify-content-center">
                             <div class="col-12 form-group">
-                                <input type="text" id="couUserName" name="group-username" placeholder="Username" class="form-control col-12" required>
+                                <p class="form-control-static">Fullname</p>
                             </div>
                             <div class="col-12 form-group">
-                                <input type="email" id="couEmail" name="group-creator" placeholder="Email" class="form-control col-12" required>
+                                <p class="form-control-static">Username</p>
                             </div>
                             <div class="col-12 form-group">
-                                <input type="text" id="couDesig" name="group-username" placeholder="Designation" class="form-control col-12" required>
+                                <p class="form-control-static">Username@mail.com</p>
                             </div>
                             <div class="col-12 form-group">
-                                <input type="number" id="couMobile" name="group-number" placeholder="Phone number" class="form-control col-12" required>
+                                <p class="form-control-static">Designation</p>
                             </div>
                             <div class="col-12 form-group">
-                                <select name="select" id="couGender" class="form-control col-12" required>
-                                    <option value="0">Gender</option>
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
-                                </select>
+                                <p class="form-control-static">134859464894356</p>
                             </div>
                             <div class="col-12 form-group">
-                                <input type="password" id="couPass" name="group-number" placeholder="password" class="form-control col-12" required>
+                                <p class="form-control-static">gender</p>
                             </div>
                             <div class="col-12 form-group">
-                                <textarea name="group-description" id="couBio" rows="9" placeholder="Bio" class="form-control col-12" required></textarea>
+                                <p class="form-control-static">Password</p>
                             </div>
                             <div class="col-12 form-group">
-                                <button id="addCouBtn" type="submit" class="btn btn-lg bg-red color-white btn-block">Add Counselor</button>
+                                <p class="form-control-static">Bio - Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, quasi quibusdam. Impedit qui ex sequi, sunt illo ducimus temporibus adipisci, quos, ad voluptates accusamus esse quidem ullam provident aliquid velit!</p>
+                            </div>
+                            <div class="col-12 form-group">
+                                <button id="payment-button" type="submit" class="btn btn-lg bg-red color-white btn-block">User Counselor</button>
                             </div>
                         </div>
                     </form>
@@ -349,45 +339,6 @@
             </div>
         </div>
     </div>
-
-    <!-- export table modal -->
-    <div class="modal fade" id="exportTableModal" tabindex="-1" role="dialog" aria-labelledby="exportTableModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="row pr-3">
-                        <h3 class="modal-title col" id="exportTableModalLabel">Export Counsellor Table</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table id="data-table" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>email</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>email</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 
     <!-- Scripts -->
@@ -400,8 +351,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/axios.js"></script>
-    <script src="assets/js/app.js"></script>
-    <script src="assets/js/counselor.js"></script>
+    <script src="assets/js/report.js"></script>
     <script src="assets/js/loader.js"></script>
 
 
@@ -419,73 +369,36 @@
 
     <script type="text/javascript">
         /* Formatting function for row details - modify as you need */
-        function format ( d ) {
-            // `d` is the original data object for the row
-            return '<table class="table-responsive" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-                '<tr>'+
-                    '<td>Profile Image:</td>'+
-                    '<td>'+d.imageUrl+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>Designation:</td>'+
-                    '<td>'+d.designation+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>Bio:</td>'+
-                    '<td>'+d.bio+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>Active Cases:</td>'+
-                    '<td>'+ +'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>Resolved Cases:</td>'+
-                    '<td>'+ +'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>No of Times Reported:</td>'+
-                    '<td>'+ +'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>No of Times Blocked:</td>'+
-                    '<td>'+ +'</td>'+
-                '</tr>'+
-            '</table>';
-            
-        }
+        
         
         $(document).ready(function() {
             var table = $('#bootstrap-data-table').DataTable( {
                 "ajax": {
-                    "url": "https://us-central1-nfcs-7ab10.cloudfunctions.net/getCounsellors",
+                    "url": "https://us-central1-nfcs-7ab10.cloudfunctions.net/getReport",
                     "data": "",
                     "dataSrc": function (response) {
                         var tableData = response.data;
-                        // console.log(tableData);
+                        console.log(tableData);
                         var return_data = new Array();
                         var tokensArr = new Array();
-                        for(const person of tableData){ 
+                        for(const person of tableData){
 
                             const tokens = {}
                             tokens[person.uid] = person.token
 
                             
                             tokensArr.push(tokens)
+
                             return_data.push({
-                            'name': `<span>  ${person.username} </span> <i class="fa fa-circle ${(person.online == 'true') ?  'color-green'  : 'color-red'}" style="font-size:5px"></i>  `,
-                            'gender': person.gender,
-                            'status': (person.blocked == "true") ? "blocked" : "unblocked",
-                            'email': person.email,
-                            'imageUrl'  : '<img src="' + person.imageUrl + '" width="50">',
-                            'designation': person.designation,
-                            'phone' : person.phone,
-                            'designation' : person.designation,
-                            'bio' : person.bio,
-                            'blocked':  `<button id="${(person.uid)}" class="btn bg-transparent block"><i class="fa ${(person.blocked == 'true') ?  'fa-times color-red'  : 'fa-check color-green'}"></i></button>`
+                            'name': `<span>  ${person.username} </span>   `,
+                            'category': person.category,
+                            'complain': person.complain,
+                            'date': `${new Date(Number(person.date)).toLocaleDateString("en-US")}`,
+                            'blocked':   `<button id="${(person.uid)}" class="btn bg-transparent block">Block User</button>`,
+                            'unblocked':   `<button id="${(person.uid)}" class="btn bg-transparent unblock">Unblock User</button>`
                             })
                         }
-                        // console.log(tokensArr);
-                        localStorage.setItem('tokens', JSON.stringify(tokensArr)); 
+                        // console.log(return_data)
                         return return_data;
                     }
                 },
@@ -500,108 +413,16 @@
                         "defaultContent": ''
                     },
                     {"data" : "name"},
-                    {"data" : "gender"},
-                    {"data" : "status"},
-                    {"data" : "phone"},
-                    {"data" : "email"},
+                    {"data" : "category"},
+                    {"data" : "complain"},
+                    {"data" : "date"},
                     {"data": "blocked"},
-                    {"defaultContent": '<button class="btn bg-transparent color-red"><ion-icon name="trash-outline"></ion-icon></button>'}
+                    {"data": "unblocked"}
                 ],  
                 "order": [[0, 'asc']],
                 "bDestroy": true
             });
-            $('#bootstrap-data-table tbody').on('click', 'td.details-control', function () {
-                var tr = $(this).closest('tr');
-                var row = table.row( tr );
-        
-                if ( row.child.isShown() ) {
-                    // This row is already open - close it
-                    row.child.hide();
-                    tr.removeClass('shown');
-                }
-                else {
-                    // Open this row
-                    row.child(format(row.data())).show();
-                    tr.addClass('shown');
-                }
-            } );
-            //delete counsellor
-            $('#bootstrap-data-table tbody').on( 'click', 'button.color-red', function () {
-                var tr = $(this).closest("tr");
-                var id = tr.find("td>button.block").attr("id");
-                var name = tr.find("td>span").text();
-                
-                
-                var obj = {};
-                obj.name = name;
-                obj.id = id;
-                
-                let allTokens = JSON.parse(localStorage.getItem("tokens"));
-                
-                allTokens.forEach(token => {
-                    if (obj.id == Reflect.ownKeys(token)){
-                        // console.log(obj.id)
-                        $.ajax({
-                            url: 'https://us-central1-nfcs-7ab10.cloudfunctions.net/deleteUser',
-                            headers: { 'Access-Control-Allow-Origin': 'http://127.0.0.1:8080' },
-                            method: 'POST',
-                            dataType: 'json',
-                            data: {
-                                "username": obj.name,
-                                "uid": obj.id
-                            }
-                        }).done(function(data) {
-                            // console.log(data);
-                            tr.remove();
-                            window.location.replace("/counselors.html")
-                        }).fail(function(err) {
-                            console.log(err);
-                        })
-                    }
-                });
-
-                
-            } );
-            //block counsellor
-            $('#bootstrap-data-table tbody').on( 'click', 'button.block', function () {
-                var tr = $(this).closest("tr");
-                var id = tr.find("td>button.block").attr("id");
-                var status = tr.find("td:eq(3)").text();
-
-                var obj = {};
-                let value;
-                let allTokens = JSON.parse(localStorage.getItem("tokens"));
-                for (const token of allTokens) {
-                    if (id == Reflect.ownKeys(token)) {
-                        value = Object.values(token).pop();
-                    }
-                }
-                
-                obj.id = id;
-                obj.token = value;
-
-                // console.log(obj.token)
-                
-                $.ajax({
-                    url: 'https://us-central1-nfcs-7ab10.cloudfunctions.net/blockUser',
-                    headers: { 'Access-Control-Allow-Origin': 'http://127.0.0.1:8080' },
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "uid": obj.id,
-                        "token": obj.token
-                    }
-                }).done(function(data) {
-                    // console.log(data);
-                    window.location.replace("/counselors.html")
-                }).fail(function(err) {
-                    console.log(err);
-                })
-                
-                
-
-                
-            } );
+            
         });
     </script>
     

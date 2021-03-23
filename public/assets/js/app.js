@@ -14,72 +14,20 @@ function _(str) {
     return document.querySelector(str);
 }
 
-
+axios.defaults.baseURL = `https://us-central1-qtalk-4dd0f.cloudfunctions.net/`;
 
 // check if there is a token
 const checkToken = !! localStorage.getItem("usertoken");
 
 // the path we dont want just anyone to see
-if(location.pathname == "index.html") {
+if(location.pathname == "/public/index.html") {
     console.log('index page')
+
 
     // if there's no token, redirect the user to loging
     if(!checkToken) {
-        location.replace('/login.html');
+        location.replace('/public/login.html');
     }
-
-}
-
-// Login Admin
-const loginForm = _("#loginForm");
-
-if(loginForm) {
-
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const email = _("#lemail").value;
-        const pwd = _("#lpwd").value;
-    
-        const userData = {
-            email: email,
-            password: pwd
-        }
-    
-    
-        const loginUrl = "https://us-central1-qtalk-4dd0f.cloudfunctions.net/loginAdmin";
-    
-        axios.post(loginUrl, userData).then(function(response) {
-            
-            console.log(response.data)
-
-            const token = response.data.data.uid;
-            localStorage.setItem('usertoken', token);
-            console.log(localStorage.getItem("usertoken"));
-
-            const name = response.data.data.username;
-            localStorage.setItem('uname', name);
-            console.log(name);
-
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: `Login Successful`,
-                showConfirmButton: false,
-                timer: 3000
-            })
-
-            setTimeout(() => {
-            
-                location.replace("index.html")
-            }, 3000);
-    
-        }).catch(function(err) {
-            console.log(err.response)
-        })
-    
-
-    })
 
 }
 
@@ -88,11 +36,11 @@ const logOut = _("#logout");
 if (logOut) {
     logOut.addEventListener('click', (e) => {
         e.preventDefault();
-        const logOutUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/loginOutAdmin";
+        const logOutUrl = "loginOutAdmin";
         axios.get(logOutUrl).then(function(response){
             console.log(response);
             localStorage.clear();
-            window.location.replace("/login.html");
+            window.location.replace("/public/login.html");
         }).catch(function(err) {
             console.log(err.response)
         })
@@ -108,13 +56,13 @@ if (userName) {
 
 // All Users
 const allUsers = _("#allUsers");
-const allUsersMsg = ("#singleUser");
+// const allUsersMsg = _("#singleUser");
 
 if (allUsers) {
-    const allUsersUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/getUsers";
+    const allUsersUrl = "getUsers";
     axios.get(allUsersUrl).then(function(response){
         console.log(response.data.data);
-        const users = response.data.data
+        const users = response.data.data;
         allUsers.innerHTML = `
         <div class="card">
             <div class="card-body">
@@ -133,27 +81,23 @@ if (allUsers) {
         </div>
         `
 
-        for(const person of users){
-            allUsersMsg.innerHTML = `
-            <option value="" label="default"></option>
-            <optgroup label="All Users">
-                <option id="${person.uid}">${person.username}</option>
-            </optgroup>
-            `
-        }
-
     }).catch(function(err) {
-        console.log(err.response);
+        console.log(err);
     })
 }
 
 // Add Cou
 const addCouForm = _("#addCouForm");
+const addCouBtn = _("#addCouBtn");
 
 if(addCouForm) {
 
     addCouForm.addEventListener('submit', function(e) {
         e.preventDefault();
+
+        addCouBtn.setAttribute("disabled", true);
+        addCouBtn.innerHTML = `<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>
+        <span class="sr-only">Loading...</span>`;
 
         const username = _("#couUserName").value;
         const email = _("#couEmail").value;
@@ -176,11 +120,11 @@ if(addCouForm) {
         // console.log(userData);
     
     
-        const addCouUrl = "https://us-central1-qtalk-4dd0f.cloudfunctions.net/createUser";
+        const addCouUrl = "createUser";
     
         axios.post(addCouUrl, userData).then(function(response) {
             
-            console.log(response.data)
+            // console.log(response.data)
 
             // const token = response.data.data.uid;
             // localStorage.setItem('usertoken', token);
@@ -190,18 +134,32 @@ if(addCouForm) {
             // localStorage.setItem('uname', name);
             // console.log(name);
 
+            addCouBtn.removeAttribute("disabled");
+            addCouBtn.innerHTML = `Add Counselor`;
+
             swal.fire({
                 position: 'center',
-                showConfirmButton: false,
+                icon: 'success',
                 timer: 3000,
-                timerProgressBar: true,
                 title: 'Counselor added Successfully'
             })
 
-            location.replace("/counselors.html")
+            setTimeout(() => {
+                location.replace("/public/counselors.html")
+            }, 3000)
+
+            
     
         }).catch(function(err) {
-            console.log(err.response)
+            // console.log(err.response);
+            addCouBtn.removeAttribute("disabled");
+            addCouBtn.innerHTML = `Add Counselor`;
+            swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: `${err.response.data.message}`,
+                timer: 3000
+            })
         })
     
 
@@ -214,9 +172,9 @@ const allCounselors = _("#allCounselors");
 const counselorTable = _("#couTable");
 
 if (allCounselors) {
-    const allCounselorsUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/getCounsellors";
+    const allCounselorsUrl = "getCounsellors";
     axios.get(allCounselorsUrl).then(function(response){
-        console.log(response.data.data);
+        // console.log(response.data.data);
         allCounselors.innerHTML = `
         <div class="card">
             <div class="card-body">
@@ -236,7 +194,7 @@ if (allCounselors) {
         `;
 
         if (response.data.data.length > 0) {
-            console.log(response.data.data.length);
+            // console.log(response.data.data.length);
             let counTablecontent = '';
             for (var i in response.data.data) {
                 counTablecontent += `
@@ -268,9 +226,10 @@ if (allCounselors) {
 const reports = _("#reports");
 
 if (reports) {
-    const reportsUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/getReport";
+    const reportsUrl = "getReport";
     axios.get(reportsUrl).then(function(response){
         const allReports = response.data.data;
+        console.log(allReports);
         if (allReports.length > 0) {
             let content = '';
             for (var i in allReports) {
@@ -291,147 +250,218 @@ if (reports) {
     })
 }
 
-//CHATS
-//create group chats
-const createGroupForm = _("#createGroupForm");
+// Blocked Users
+const blockedUsers = _("#blockedUsers");
 
-if(createGroupForm) {
-
-    createGroupForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const createdBy = _("#gCreator").value;
-        const desc = _("#gDesc").value;
-        const imageUrl = _("#gImage").value;
-        const members = _("#gNumber").value;
-        const name = _("#gName").value;
-    
-        const userData = {
-            createdBy: createdBy,
-            desc: desc,
-            imageUrl: imageUrl,
-            members: members,
-            name: name
+if (blockedUsers) {
+    const blockedUsersUrl = "getBlockedUsers";
+    axios.get(blockedUsersUrl)
+    .then(function(response){
+        allBlockedUsers = response.data.data;
+        if(response.data.data.length == 0){
+            blockedUsers.innerHTML = `
+            <tr>
+                <div class="text-center mt-4">No Recently Blocked Users</div>
+            </tr>
+            `
+            
+        } else {
+            let content = '';
+            for (var i in allBlockedUsers) {
+                content += `
+                <tr>
+                    <td>  <span class="name">${allBlockedUsers[i].username}</span> </td>
+                    <td> <span>${allBlockedUsers[i].category}</span> </td>
+                    <td><span>${allBlockedUsers[i].complain}</span></td>
+                    <!-- <td>
+                        <span class="badge badge-complete">Complete</span>
+                    </td> -->
+                </tr>`;
+            }
+            reports.innerHTML = content; 
         }
-
-        console.log(userData);
-    
-    
-        const createGroupUrl = "https://us-central1-qtalk-4dd0f.cloudfunctions.net/createGroupChat";
-    
-        axios.post(createGroupUrl, userData).then(function(response) {
-            
-            console.log(response.data)
-
-            // const token = response.data.data.uid;
-            // localStorage.setItem('usertoken', token);
-            // console.log(token);
-
-            // const name = response.data.data.username;
-            // localStorage.setItem('uname', name);
-            // console.log(name);
-
-            
-            window.location.replace("/chats.html")
-
-    
-        }).catch(function(err) {
-            console.log(err.response)
-        })
-    
-
-    })
-
+    }).catch(err => {
+        console.log(err);
+    });
 }
 
-//Change Username
-const changeUserForm = _("#chuserForm");
+// Send Notifications
 
-if(changeUserForm) {
+const sendNotificationForm = _("#sendNotificationForm");
+const sendNotificationFormBtn = _("#sendNotificationFormBtn");
+const notificationMessage = _("#notificationMessage");
+const radio1 = _("#radio1");
+const radio2 = _("#radio2");
+const radio3 = _("#radio3");
+let selectAllUsersDropdown = _("#selectAllUsersDropdown");
+let selectAllUsersContainer = _("#selectAllUsersContainer");
 
-    changeUserForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const usrName = _("#username").value;
-    
-        const userData = {
-            usrName: usrName,
-            uid: localStorage.getItem('usertoken')
-        }
-    
-    
-        const changeUserUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/changeAdminUsername";
-    
-        axios.post(changeUserUrl, userData).then(function(response) {
-            
-            console.log(response.data)
-
-            // const token = response.data.data.uid;
-            // localStorage.getItem('usertoken', token);
-            // console.log(token);
-
-            // const name = response.data.data.username;
-            // localStorage.setItem('uname', name);
-            // console.log(name);
-
-            // location.replace("/index.html")
-    
-        }).catch(function(err) {
-            console.log(err.response)
-        })
-    
-
-    })
-
+const toggleSelectUser = () => {
+    if (radio3.checked) {
+        selectAllUsersContainer.classList.remove('d-none');
+    } else if (!radio3.checked) {
+        selectAllUsersContainer.classList.add('d-none');
+    }
 }
 
-//Create Admin
-const createAdminForm = _("#crAdminForm");
+if(sendNotificationForm) {
 
-if(createAdminForm) {
-
-    createAdminForm.addEventListener('submit', function(e) {
+    sendNotificationForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const fName = _("#craFn").value;
-        const lName = _("#craLn").value;
-        const userName = _("#craUn").value;
-        const email = _("#craEm").value;
-        const pwd = _("#craPw").value;
-        const img = _("#customFile")
+        sendNotificationFormBtn.setAttribute("disabled", true);
+        sendNotificationFormBtn.innerHTML = `<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>
+        <span class="sr-only">Loading...</span>`;
+
+        if (radio1.checked) {
+            const userData = {
+                messages: notificationMessage.value
+            }  
+            
+            const sendNotificationFormUrl = "sendNotificationToCounsellor";
     
-        const userData = {
-            fName: fName,
-            lName: lName,
-            userName: userName,
-            email: email,
-            pwd: pwd,
-            img: 'default'
+            axios.post(sendNotificationFormUrl, userData).then(function(response) {
+                
+                // console.log(response.data)
+
+                // const token = response.data.data.uid;
+                // localStorage.setItem('usertoken', token);
+                // console.log(token);
+
+                // const name = response.data.data.username;
+                // localStorage.setItem('uname', name);
+                // console.log(name);
+
+                sendNotificationFormBtn.removeAttribute("disabled");
+                sendNotificationFormBtn.innerHTML = `<i class="pe-7s-paper-plane"></i>`;
+
+                swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    timer: 3000,
+                    title: 'Message Sent'
+                })
+
+                setTimeout(() => {
+                    location.replace("/public/index.html")
+                }, 3000)
+
+                
+        
+            }).catch(function(err) {
+                // console.log(err.response);
+                sendNotificationFormBtn.removeAttribute("disabled");
+                sendNotificationFormBtn.innerHTML = `<i class="pe-7s-paper-plane"></i>`;
+                swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: `${err.response.data.message}`,
+                    timer: 3000
+                })
+            })
+        }
+        
+        if (radio2.checked) {
+            const userData = {
+                messages: notificationMessage.value
+            }  
+            
+            const sendNotificationFormUrl = "sendNotificationToUser";
+    
+            axios.post(sendNotificationFormUrl, userData).then(function(response) {
+                
+                // console.log(response.data)
+
+                // const token = response.data.data.uid;
+                // localStorage.setItem('usertoken', token);
+                // console.log(token);
+
+                // const name = response.data.data.username;
+                // localStorage.setItem('uname', name);
+                // console.log(name);
+
+                sendNotificationFormBtn.removeAttribute("disabled");
+                sendNotificationFormBtn.innerHTML = `<i class="pe-7s-paper-plane"></i>`;
+
+                swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    timer: 3000,
+                    title: 'Message Sent'
+                })
+
+                setTimeout(() => {
+                    location.replace("/public/index.html")
+                }, 3000)
+
+                
+        
+            }).catch(function(err) {
+                // console.log(err.response);
+                sendNotificationFormBtn.removeAttribute("disabled");
+                sendNotificationFormBtn.innerHTML = `<i class="pe-7s-paper-plane"></i>`;
+                swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: `${err.response.data.message}`,
+                    timer: 3000
+                })
+            })
+        }
+        
+        if (radio3.checked) {
+            let selectedOption = selectAllUsersDropdown.options[selectAllUsersDropdown.selectedIndex].getAttribute('value');
+            let selectedOpionArray = selectedOption.split(',');
+            console.log(selectedOpionArray[1]);
+
+            const userData = {
+                messages: notificationMessage.value,
+                uid: selectedOpionArray[1],
+                token: selectedOpionArray[0],
+                type: "user"
+            }
+    
+            // console.log(userData);
+        
+        
+            const sendNotificationFormUrl = "sendNotificationToToken";
+        
+            axios.post(sendNotificationFormUrl, userData).then(function(response) {
+                
+                // console.log(response.data)
+    
+                sendNotificationFormBtn.removeAttribute("disabled");
+                sendNotificationFormBtn.innerHTML = `<i class="pe-7s-paper-plane"></i>`;
+    
+                swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    timer: 3000,
+                    title: 'Message Sent'
+                })
+    
+                setTimeout(() => {
+                    location.replace("/public/index.html")
+                }, 3000)
+    
+                
+        
+            }).catch(function(err) {
+                // console.log(err.response);
+                sendNotificationFormBtn.removeAttribute("disabled");
+                sendNotificationFormBtn.innerHTML = `<i class="pe-7s-paper-plane"></i>`;
+                swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: `${err.response}`,
+                    timer: 3000
+                })
+            })
         }
     
-        console.log(userData);
-    
-        const createAdminUrl = "https://us-central1-nfcs-7ab10.cloudfunctions.net/createAdmin";
-    
-        axios.post(createAdminUrl, userData).then(function(response) {
-            
-            console.log(response.data)
-
-            // const token = response.data.data.uid;
-            // localStorage.getItem('usertoken', token);
-            // console.log(token);
-
-            // const name = response.data.data.username;
-            // localStorage.setItem('uname', name);
-            // console.log(name);
-
-            // location.replace("/index.html")
-    
-        }).catch(function(err) {
-            console.log(err.response)
-        })
+        
     
 
     })
-
+    
 }

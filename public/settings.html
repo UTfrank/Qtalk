@@ -218,7 +218,6 @@
                                             <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
                                                 <a class="nav-item nav-link active" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="true">Profile</a>
                                                 <a class="nav-item nav-link" id="custom-nav-createAdmin-tab" data-toggle="tab" href="#custom-nav-createAdmin" role="tab" aria-controls="custom-nav-createAdmin" aria-selected="false">Create Admin</a>
-                                                <a class="nav-item nav-link" id="custom-nav-notification-tab" data-toggle="tab" href="#custom-nav-notification" role="tab" aria-controls="custom-nav-notification" aria-selected="false">notification</a>
                                                 <a class="nav-item nav-link" id="custom-nav-feedBack-tab" data-toggle="tab" href="#custom-nav-feedBack" role="tab" aria-controls="custom-nav-feedBack" aria-selected="false">Feed Back</a>
                                                 <a class="nav-item nav-link" id="custom-nav-aboutQtalk-tab" data-toggle="tab" href="#custom-nav-aboutQtalk" role="tab" aria-controls="custom-nav-aboutQtalk" aria-selected="false">About Qtalk</a>
                                             </div>
@@ -232,7 +231,7 @@
                                                             <input type="text" id="username" name="group-username" placeholder="Enter Your Username" class="form-control col-12">
                                                         </div>
                                                         <div class="col-12 form-group">
-                                                            <button type="submit" class="btn btn-lg bg-red color-white">Update</button>
+                                                            <button id="changeUsrNameBtn" type="submit" class="btn btn-lg bg-red color-white">Update</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -240,36 +239,27 @@
                                             <div class="tab-pane fade show" id="custom-nav-createAdmin" role="tabpanel" aria-labelledby="custom-nav-createAdmin-tab">
                                                 <p>Create Admin:</p>
                                                 <form id="crAdminForm" class="form-horizontal">
-                                                    <div class="row justify-content-center">
+                                                    <div class="row">
                                                         <div class="col-md-6 col-12 form-group">
-                                                            <div class="custom-file">
-                                                                <input type="file" class="custom-file-input" id="customFile">
-                                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                                            </div>
+                                                            <input type="text" id="craFn" name="group-username" placeholder="First Name" class="form-control col-12" required>
                                                         </div>
                                                         <div class="col-md-6 col-12 form-group">
-                                                            <input type="text" id="craFn" name="group-username" placeholder="First Name" class="form-control col-12">
+                                                            <input type="text" id="craLn" name="group-username" placeholder="Last Name" class="form-control col-12" required>
                                                         </div>
                                                         <div class="col-md-6 col-12 form-group">
-                                                            <input type="text" id="craLn" name="group-username" placeholder="Last Name" class="form-control col-12">
+                                                            <input type="text" id="craUn" name="group-username" placeholder="Username" class="form-control col-12" required>
                                                         </div>
                                                         <div class="col-md-6 col-12 form-group">
-                                                            <input type="text" id="craUn" name="group-username" placeholder="Username" class="form-control col-12">
+                                                            <input type="email" id="craEm" name="group-creator" placeholder="Email" class="form-control col-12" required>
                                                         </div>
                                                         <div class="col-md-6 col-12 form-group">
-                                                            <input type="email" id="craEm" name="group-creator" placeholder="Email" class="form-control col-12">
-                                                        </div>
-                                                        <div class="col-md-6 col-12 form-group">
-                                                            <input type="password" id="craPw" name="group-number" placeholder="Password" class="form-control">
+                                                            <input type="password" id="craPw" name="group-number" placeholder="Password" class="form-control" required>
                                                         </div>
                                                         <div class="col-12 form-group">
-                                                            <button id="payment-button" type="submit" class="btn btn-lg bg-red color-white">Create</button>
+                                                            <button id="createAdminBtn" type="submit" class="btn btn-lg bg-red color-white">Create</button>
                                                         </div>
                                                     </div>
                                                 </form>
-                                            </div>
-                                            <div class="tab-pane fade" id="custom-nav-notification" role="tabpanel" aria-labelledby="custom-nav-notification-tab">
-                                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, irure terry richardson ex sd. Alip placeat salvia cillum iphone. Seitan alip s cardigan american apparel, butcher voluptate nisi .</p>
                                             </div>
                                             <div class="tab-pane fade" id="custom-nav-feedBack" role="tabpanel" aria-labelledby="custom-nav-feedBack-tab">
                                                 <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, irure terry richardson ex sd. Alip placeat salvia cillum iphone. Seitan alip s cardigan american apparel, butcher voluptate nisi .</p>
@@ -357,7 +347,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="assets/js/axios.js"></script>
+    <script src="assets/js/settings.js"></script>
     <script src="assets/js/app.js"></script>
     <script src="assets/js/loader.js"></script>
 

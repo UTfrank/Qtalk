@@ -183,7 +183,7 @@
 
                             <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" id="logout"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
 
@@ -344,7 +344,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
     <script src="assets/js/axios.js"></script>
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/chats.js"></script>
     <script src="assets/js/loader.js"></script>
 
 
@@ -362,69 +362,7 @@
 
     <script type="text/javascript">
         
-        $(document).ready(function() {
-            var table = $('#bootstrap-data-table').DataTable( {
-                "ajax": {
-                    "url": "https://us-central1-nfcs-7ab10.cloudfunctions.net/getGroupChat",
-                    "data": "",
-                    "dataSrc": function (response) {
-                        var tableData = response.data;
-                        console.log(tableData);
-                        var return_data = new Array();
-                        for(var i=0;i< tableData.length; i++){
-                            return_data.push({
-                            'imageUrl'  : '<img src="' + tableData[i].imageUrl + '" width="50">',
-                            'name': '<a href="chat.html?' + tableData[i].name + '" class="group-name">'+ tableData[i].name +'</a>',
-                            'description': tableData[i].desc,
-                            'createdBy': tableData[i].createdBy,
-                            'members': tableData[i].members
-                            })
-                        }
-                        return return_data;
-                    }
-                },
-                dom: 'Bfrtip',
-                buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5'
-                ],
-                "columns": [
-                    {"data" : "imageUrl"},
-                    {"data" : "name"},
-                    {"data" : "description"},
-                    {"data" : "createdBy"},
-                    {"data" : "members"},
-                    {"defaultContent": '<button class="btn bg-transparent color-red delGroup"><ion-icon name="trash-outline"></ion-icon></button>'}
-                ],  
-                "bDestroy": true
-            });
-            
-            $('#bootstrap-data-table tbody').on( 'click', 'button', function () {
-                var tr = $(this).closest("tr");
-                var name = tr.find("td>a").text();
-                
-                var obj = {};
-                obj.name = name;
-
-                $.ajax({
-                    url: 'https://us-central1-qtalk-4dd0f.cloudfunctions.net/deleteGroup',
-                    headers: { 'Access-Control-Allow-Origin': 'http://127.0.0.1:8080' },
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "groupName": obj.name
-                    }
-                }).done(function(data) {
-                    console.log(data);
-                    tr.remove();
-                    window.location.replace("/chats.html")
-                }).fail(function(err) {
-                    console.log(err);
-                })
-            } );
-        });
+        
 
        
 
