@@ -20,13 +20,13 @@ axios.defaults.baseURL = `https://us-central1-qtalk-4dd0f.cloudfunctions.net/`;
 const checkToken = !! localStorage.getItem("usertoken");
 
 // the path we dont want just anyone to see
-if(location.pathname == "/public/index.html") {
+if(location.pathname == "/") {
     console.log('index page')
 
 
     // if there's no token, redirect the user to loging
     if(!checkToken) {
-        location.replace('/public/login.html');
+        location.replace('/login.html');
     }
 
 }
@@ -40,7 +40,7 @@ if (logOut) {
         axios.get(logOutUrl).then(function(response){
             console.log(response);
             localStorage.clear();
-            window.location.replace("/public/login.html");
+            window.location.replace("/login.html");
         }).catch(function(err) {
             console.log(err.response)
         })
@@ -61,8 +61,9 @@ const allUsers = _("#allUsers");
 if (allUsers) {
     const allUsersUrl = "getUsers";
     axios.get(allUsersUrl).then(function(response){
-        console.log(response.data.data);
+        // console.log(response.data.data);
         const users = response.data.data;
+        
         allUsers.innerHTML = `
         <div class="card">
             <div class="card-body">
@@ -145,7 +146,7 @@ if(addCouForm) {
             })
 
             setTimeout(() => {
-                location.replace("/public/counselors.html")
+                location.replace("/counselors.html")
             }, 3000)
 
             
@@ -229,7 +230,7 @@ if (reports) {
     const reportsUrl = "getReport";
     axios.get(reportsUrl).then(function(response){
         const allReports = response.data.data;
-        console.log(allReports);
+        // console.log(allReports);
         if (allReports.length > 0) {
             let content = '';
             for (var i in allReports) {
@@ -267,18 +268,18 @@ if (blockedUsers) {
             
         } else {
             let content = '';
-            for (var i in allBlockedUsers) {
+            for (let user in allBlockedUsers) {
                 content += `
                 <tr>
-                    <td>  <span class="name">${allBlockedUsers[i].username}</span> </td>
-                    <td> <span>${allBlockedUsers[i].category}</span> </td>
-                    <td><span>${allBlockedUsers[i].complain}</span></td>
+                    <td>  <span class="name">${allBlockedUsers[user].username}</span> </td>
+                    <td> <span>${allBlockedUsers[user].email}</span> </td>
+                    <td><span>${allBlockedUsers[user].phone}</span></td>
                     <!-- <td>
                         <span class="badge badge-complete">Complete</span>
                     </td> -->
                 </tr>`;
             }
-            reports.innerHTML = content; 
+            blockedUsers.innerHTML = content; 
         }
     }).catch(err => {
         console.log(err);
@@ -343,7 +344,7 @@ if(sendNotificationForm) {
                 })
 
                 setTimeout(() => {
-                    location.replace("/public/index.html")
+                    location.replace("/index.html")
                 }, 3000)
 
                 
@@ -391,7 +392,7 @@ if(sendNotificationForm) {
                 })
 
                 setTimeout(() => {
-                    location.replace("/public/index.html")
+                    location.replace("/index.html")
                 }, 3000)
 
                 
@@ -441,7 +442,7 @@ if(sendNotificationForm) {
                 })
     
                 setTimeout(() => {
-                    location.replace("/public/index.html")
+                    location.replace("/index.html")
                 }, 3000)
     
                 

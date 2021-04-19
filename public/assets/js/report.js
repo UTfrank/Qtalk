@@ -70,7 +70,7 @@ window.addEventListener('click',event => {
         blockButton.innerHTML = `Block User`;
 
         // setTimeout(() => {
-        //   location.replace("/public/reports.html")
+        //   location.replace("/reports.html")
         // }, 3000);
 
       })
@@ -145,7 +145,7 @@ window.addEventListener('click',event => {
         unBlockButton.innerHTML = `Unblock User`;
 
         // setTimeout(() => {
-        //   location.replace("/public/reports.html")
+        //   location.replace("/reports.html")
         // }, 3000);
 
       })

@@ -50,7 +50,7 @@ if(createAdminForm) {
             // console.log(name);
 
             setTimeout(() => {
-              location.replace("/public/settings.html")
+              location.replace("/settings.html")
             }, 3000);
     
         }).catch(function(err) {
@@ -122,7 +122,7 @@ if(changeUserForm) {
             // console.log(name);
 
             setTimeout(() => {
-              location.replace("/public/settings.html")
+              location.replace("/settings.html")
             }, 3000);
             
     

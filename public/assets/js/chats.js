@@ -6,10 +6,10 @@ function _(str) {
 const checkToken = !!localStorage.getItem("usertoken");
 
 // the path we dont want just anyone to see
-if (location.pathname == "/public/chats.html") {
+if (location.pathname == "/chats.html") {
   // if there's no token, redirect the user to loging
   if (!checkToken) {
-    location.replace("/public/login.html");
+    location.replace("/login.html");
   }
 }
 
