@@ -24,54 +24,26 @@ window.addEventListener("click", (e) => {
   }
   console.log(userData);
 
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: 'btn btn-success',
-      cancelButton: 'btn btn-danger'
-    },
-    buttonsStyling: false
-  })
-  
-  swalWithBootstrapButtons.fire({
-    title: 'Are you sure you want to delete this user?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, delete it!',
-    cancelButtonText: 'No, cancel!',
-    reverseButtons: true,
-    showLoaderOnConfirm: true,
-    allowOutsideClick: false,
-    preConfirm: axios.post(deleteUserUrl, userData).then(response => {
-      return response;
-    })
-    .catch(err => {
-      Swal.showValidationMessage(
-        `Request failed: ${err}`
-      )
-    })
-  }).then((result) => {
+  axios.post(deleteUserUrl, userData).then(response => {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: `${response.data.message}`,
+      showConfirmButton: false,
+      timer: 3000
+    });
     deleteBtn.removeAttribute("disabled");
     deleteBtn.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
-    if (result.isConfirmed) {
-      swalWithBootstrapButtons.fire(
-        'Deleted!',
-        'User has been deleted.',
-        'success'
-      )
-    } else if (
-      /* Read more about handling dismissals below */
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      deleteBtn.removeAttribute("disabled");
-      deleteBtn.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
-      swalWithBootstrapButtons.fire(
-        'Cancelled',
-        'Your imaginary file is safe :)',
-        'error'
-      )
-    }
+
+    setTimeout(() => {
+      location.replace(location.pathname)
+    }, 3000);
   })
+  .catch(err => {
+    Swal.showValidationMessage(
+      `Request failed: ${err}`
+    )
+  });
 
   
   
