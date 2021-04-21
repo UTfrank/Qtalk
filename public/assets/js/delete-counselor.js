@@ -22,14 +22,15 @@ window.addEventListener("click", (e) => {
     "username": name,
     "uid": id
   }
-  console.log(userData, location.pathname);
+  console.log(userData);
   
 
-  axios.post(deleteUserUrl, userData).then(response => {
+  axios.post(deleteUserUrl, userData)
+  .then(response => {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: `${response.data.message}`,
+      title: `User Deleted`,
       showConfirmButton: false,
       timer: 3000
     });
@@ -41,9 +42,15 @@ window.addEventListener("click", (e) => {
     }, 3000);
   })
   .catch(err => {
-    Swal.showValidationMessage(
-      `Request failed: ${err}`
-    )
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: `Request failed: ${err.message}`,
+      showConfirmButton: false,
+      timer: 3000
+    });
+    deleteBtn.removeAttribute("disabled");
+    deleteBtn.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
   });
 
   

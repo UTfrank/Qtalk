@@ -20,6 +20,7 @@ window.addEventListener('click', e => {
   const userData = {
     uid: id
   };
+  console.log(userData);
 
   axios.post(restoreUserUrl, userData)
   .then(response => {
@@ -33,13 +34,22 @@ window.addEventListener('click', e => {
 
     
     unBlockBtn.removeAttribute("disabled");
-    unBlockBtn.innerHTML = `Unblock User`;
+    unBlockBtn.innerHTML = `Unblock`;
 
     setTimeout(() => {
       location.replace("/blocked-counselors.html")
     }, 3000);
   })
   .catch(err => {
-    console.log(err)
+    console.log(err);
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: `${err}`,
+      showConfirmButton: false,
+      timer: 3000
+    });
+    unBlockBtn.removeAttribute("disabled");
+    unBlockBtn.innerHTML = `Unblock`;
   })
 })
